@@ -19,4 +19,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as my_socket:
     data = my_socket.recv(1024)
     print('Recibido -- ', data.decode('utf-8'))
 
+# El socket deja de existir cuando acaba el with.
+# b linea 18: bytes, si fuera u seria en utf.
+
 print("Socket terminado.")
