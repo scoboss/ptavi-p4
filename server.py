@@ -16,6 +16,7 @@ class EchoHandler(socketserver.DatagramRequestHandler):
         self.wfile.write(b"Hemos recibido tu peticion")
         for line in self.rfile:
             print("El cliente nos manda ", line.decode('utf-8'))
+#Tratamos como un fichero.
 
 if __name__ == "__main__":
     serv = socketserver.UDPServer(('', 6001), EchoHandler)
