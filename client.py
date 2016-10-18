@@ -6,11 +6,14 @@ Programa cliente UDP que abre un socket a un servidor
 # Aclaraciones ejercicio 2.
 # Importa el modulo socket.
 import socket
+import sys
 
 # Constantes. Dirección IP del servidor y contenido a enviar.
-SERVER = 'localhost'
-PORT = 6001
-LINE = '¡Hola mundo!'
+SERVER = sys.argv[1]
+PORT = int(sys.argv[2])
+LINE_LISTA = sys.argv[2:]
+LINE = ' '.join(LINE_LISTA)
+
 
 # Creamos el socket, lo configuramos y lo atamos a un servidor/puerto.
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as my_socket:
