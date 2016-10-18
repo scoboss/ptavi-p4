@@ -5,6 +5,7 @@ Clase (y programa principal) para un servidor de eco en UDP simple
 """
 # Importa el modulo socketserver.
 import socketserver
+import sys
 
 #Claase que manejara las peticiones. Clase hereda de DatagramaRequestHandler.
 class EchoHandler(socketserver.DatagramRequestHandler):
@@ -14,12 +15,17 @@ class EchoHandler(socketserver.DatagramRequestHandler):
     # Metodo que se ejecuta cada vez que recibimos una peticion.
     def handle(self):
         self.wfile.write(b"Hemos recibido tu peticion")
-        for line in self.rfile:
-            print("El cliente nos manda ", line.decode('utf-8'))
+        cliente_info = self.client_address
+        print (cliente_info[0])
+        print (cliente_info[1])
+        while 1:
+            line = self.rfile.read()
+
 #Tratamos como un fichero; self.wfile y self.rfile.
 
 if __name__ == "__main__":
-    serv = socketserver.UDPServer(('', 6001), EchoHandler)
+    PORT = int(sys.argv[1])
+    serv = socketserver.UDPServer(('', PORT), EchoHandler)
     print("Lanzando servidor UDP de eco...")
     try:
         serv.serve_forever()
