@@ -7,7 +7,9 @@ Clase (y programa principal) para un servidor de eco en UDP simple
 import socketserver
 import sys
 
-#Claase que manejara las peticiones. Clase hereda de DatagramaRequestHandler.
+#modificar da algunos errores.
+
+#Clase que manejara las peticiones. Clase hereda de DatagramaRequestHandler.
 class SIPRegisterHandler(socketserver.DatagramRequestHandler):
     """
     Echo server class
