@@ -8,6 +8,8 @@ Programa cliente UDP que abre un socket a un servidor
 import socket
 import sys
 
+#modificar dar algunos errores.
+
 # Constantes. Dirección IP del servidor y contenido a enviar.
 SERVER = sys.argv[1]
 PORT = int(sys.argv[2])
