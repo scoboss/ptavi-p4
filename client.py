@@ -8,28 +8,48 @@ Programa cliente UDP que abre un socket a un servidor
 import socket
 import sys
 
-#modificar dar algunos errores.
+if len(sys.argv) != 6:
+    sys.exit("Usage: client.py ip puerto register sip_address expires_value")
 
-# Constantes. Dirección IP del servidor y contenido a enviar.
 SERVER = sys.argv[1]
-PORT = int(sys.argv[2])
-LINE_LISTA = sys.argv[3:]
-LINE = ' '.join(LINE_LISTA)
+try:
+    PORT = int(sys.argv[2])
+except ValueError:
+    sys.exit("Invalid Port")
 
-if (LINE.split()[0] == 'register'):
-        LINE = 'REGISTER' + 'sip' + LINE.split()[1] + 'SIP/2.0\r\n\r\n'
+#Lo que vamos a enviar.
+METODO = sys.argv[3].upper()
+USUARIO = sys.argv[4]
+try:
+    EXPIRES = sys.argv[5]
+    if int(EXPIRES) < 0:
+        sys.exit("Expires must be > 0 ")
+except ValueError:
+    sys.exit("Expires must be an integer")
 
-# Creamos el socket, lo configuramos y lo atamos a un servidor/puerto.
+#Creamos el socket, lo configuramos y lo atamos a un servidor/puerto.
 my_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 my_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-my_socket.connect((SERVER, PORT))
-    print("Enviando:", LINE)
-    my_socket.send(bytes(LINE, 'utf-8') + b'\r\n')
+try:
+    my_socket.connect((SERVER, PORT))
+except socket.gaierror:
+    sys.exit("Invalid IP")
+
+print("Enviando: " + METODO + ' sip:' + USUARIO + ' SIP/2.0' + ' Expires:'
+    + EXPIRES)
+my_socket.send(bytes(METODO, 'utf-8') + b' sip:' + bytes(USUARIO, 'utf-8') + 
+                b' SIP/2.0\r\n' + b'Expires:' + bytes(EXPIRES, 'utf-8') 
+                + b'\r\n\r\n')
+try:
     data = my_socket.recv(1024)
-    print('Recibido -- ', data.decode('utf-8'))
-# Send para enviar y recv para recibir. Ademas el buffer de recv en bytes.
+except ConnectionRefusedError:
+    sys.exit("Conection refused")
 
-# El socket deja de existir cuando acaba el with no hace falta cerrarlo.
-# b linea 18: bytes, si fuera u seria en utf.
+print('Recibido --', data.decode('utf-8'))
+print("Terminando socket...")
 
-print("Socket terminado.")
+#Cerramos todo
+my_socket.close()
+print("Fin.")
+    
+
