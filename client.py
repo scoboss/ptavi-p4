@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+
 """
 Programa cliente UDP que abre un socket a un servidor
 """
-# Aclaraciones ejercicio 2.
-# Importa el modulo socket.
+
 import socket
 import sys
 
