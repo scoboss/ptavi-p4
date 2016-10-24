@@ -4,7 +4,7 @@
 """
 Clase (y programa principal) para un servidor de eco en UDP simple
 """
-# Importa el modulo socketserver.
+
 import socketserver
 import sys
 import json
