@@ -35,11 +35,12 @@ try:
 except socket.gaierror:
     sys.exit("Invalid IP")
 
-print("Enviando: " + METODO + ' sip:' + USUARIO + ' SIP/2.0' + ' Expires:'
-    + EXPIRES)
-my_socket.send(bytes(METODO, 'utf-8') + b' sip:' + bytes(USUARIO, 'utf-8') + 
-                b' SIP/2.0\r\n' + b'Expires:' + bytes(EXPIRES, 'utf-8') 
-                + b'\r\n\r\n')
+print("Enviando: " + METODO + ' sip:' + USUARIO + ' SIP/2.0' + ' Expires:' +
+      EXPIRES)
+
+my_socket.send(bytes(METODO, 'utf-8') + b' sip:' + bytes(USUARIO, 'utf-8') +
+               b' SIP/2.0\r\n' + b'Expires:' + bytes(EXPIRES, 'utf-8') +
+               b'\r\n\r\n')
 try:
     data = my_socket.recv(1024)
 except ConnectionRefusedError:
@@ -51,5 +52,3 @@ print("Terminando socket...")
 #Cerramos todo
 my_socket.close()
 print("Fin.")
-    
-
