@@ -56,21 +56,23 @@ class SIPRegisterHandler(socketserver.DatagramRequestHandler):
         Método que crea un documento json con los usuarios registrados
         """
         with open('registered.json', 'w') as fichero_json:
-            json.dump(self.users_dic, fichero_json, sort_keys=True, indent=4, separators=(',', ':'))
+            json.dump(self.users_dic, fichero_json, sort_keys=True,
+                      indent=4, separators=(',', ':'))
 
     def json2registered(self):
         """
-        Método que crea un diccionario con los usuarios registrados anteriormente
+        Método que crea un diccionario
+        con los usuarios registrados anteriormente
         """
         try:
             fich_json = open('registered.json', 'r')
             self.users_dic = json.load(fich_json)
         except:
-            self.users_dic = {}     
+            self.users_dic = {}
 
 if __name__ == "__main__":
     try:
-        PORT = int(sys.argv[0])
+        PORT = int(sys.argv[1])
     except ValueError:
         sys.exit("Invalid Port")
     # Creamos servidor de eco y escuchamos
